@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title>RhythmiKaRuTTE</title>
+
+<link rel="stylesheet" href="css/Mode_Edit.css">
+<link rel="stylesheet" href="css/Mode_Point.css">
+<link rel="stylesheet" href="css/Mode_Stamp.css">
+<link rel="stylesheet" href="css/Mode_Test.css">
+
+<style>
+html,body{
+    height :100%;
+    margin:0;
+    font-size: 100%;
+}
+button, input, select, textarea {
+    font-family : inherit;
+    font-size : 100%;
+}
+#Screen
+{
+    display: flex;
+    flex-direction: column;
+    height :100%;
+    padding:2px;
+    box-sizing: border-box;
+    user-select: none;
+}
+#PlayerArea{
+    display: flex;
+    height:54;
+    flex: 0 0 auto;
+}
+#AudioPlayer
+{
+    width :50%;
+    flex: 1 0 50%;
+}
+.playerLabel
+{
+    height :100%;
+    flex: 0 0 auto;
+    padding: 0px 2px;
+    margin: 0px 1px;
+    text-align: center;
+    border: black 0px solid;
+}
+.flex_v{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.flex_h{
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+}
+#HelpButton
+{
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    border: black 1px solid;
+    line-height: 32px;
+}
+#HelpSwitch
+{
+    display: none;
+}
+#HelpSwitch:checked ~ #HelpOverlap
+{
+    display: block;
+}
+#HelpOverlap
+{
+    position: fixed;
+    display: none;
+    width:100%;
+    height:100%;
+    top:0;left:0;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+#HelpClose
+{
+    position: absolute;
+    right:0px;
+    top:2px;
+    font-size: 32px;
+    color: black;
+    background-color: white;
+    padding: 0px 8px;
+}
+#HelpPage
+{
+    width:100%;
+    height:100%;
+}
+
+#WaveDisplay
+{
+    width: 100%;
+    overflow: hidden;
+
+    flex: 0 0 auto;
+}
+#WaveCanvas
+{
+    background-color: black;
+}
+
+#TabLabels
+{
+    flex: 0 1 auto;
+    padding-top: 2px;
+    border-bottom: 0px solid #999999;
+}
+input[name="mode_tab"]
+{
+    display: none;
+}
+.TabContent{
+    display: none;
+}
+.tab_label
+{
+    padding: 0px 8px;
+    margin:0px 8px;
+    border: 1px solid #000000;
+    border-bottom: 4px solid #BBBBBB;
+    border-top: 4px solid #eeeeee;
+    background-color: #dddddd;
+}
+#TabEdit:checked ~ * #TabEditLabel ,
+#TabPoint:checked ~ * #TabPointLabel ,
+#TabStamp:checked ~ * #TabStampLabel ,
+#TabTest:checked ~ * #TabTestLabel
+{
+    background-color: #999999;
+    color: #fff;
+}
+#TabEdit:checked ~ #TextEdit ,
+#TabPoint:checked ~ #TagPoint ,
+#TabStamp:checked ~ #TagStamp ,
+#TabTest:checked ~ #TTTest
+{
+    display:flex;
+}
+
+.bottom_controls_area
+{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;        
+    flex:0 0 auto;
+}
+.bottom_controls
+{
+    padding: 0rem 2rem;
+    margin :2px 8px;
+}
+
+
+
+</style>
+
+</head>
+<body>
+<div id="Screen">
+    <div id="PlayerArea">
+        <audio id="AudioPlayer" preload controls>
+        </audio>
+        <span class="playerLabel">Rate×<span id="PlaybackRateText">1.00</span><br>
+            <input type="range" id="PlaybackRate" min="0.25" max="2" value="1" step="0.25">
+        </span>
+        <span class="playerLabel flex_v">
+            <label for="HelpSwitch" id="HelpButton">？</label>
+        </span>
+    </div>
+    <input type="checkbox" id="HelpSwitch">
+    <div id="HelpOverlap">
+        <label for="HelpSwitch" id="HelpClose">×</label>
+        <iframe id="HelpPage" src="help.html"></iframe>
+    </div>
+    <div id="WaveDisplay">
+        <canvas id="WaveCanvas" height="250"></canvas>
+    </div>
+
+    <input type="radio" id="TabEdit" name="mode_tab" checked>
+    <input type="radio" id="TabPoint" name="mode_tab">
+    <input type="radio" id="TabStamp" name="mode_tab">
+    <input type="radio" id="TabTest" name="mode_tab">
+    <div id="TabLabels">
+        <label for="TabEdit" id="TabEditLabel" class="tab_label">TextEdit</label>
+        <label for="TabPoint" id="TabPointLabel" class="tab_label">TagPoint</label>
+        <label for="TabStamp" id="TabStampLabel" class="tab_label">TagStamp</label>
+        <label for="TabTest" id="TabTestLabel" class="tab_label">TTTest</label>
+    </div>
+    <div id="TextEdit" class="TabContent">
+    </div>
+    <div id="TagPoint" class="TabContent">
+    </div>
+    <div id="TagStamp" class="TabContent">
+    </div>
+    <div id="TTTest" class="TabContent">
+        <ol id="TestLyricsView">
+        </ol>
+    </div>
+
+</div>
+    <script type='text/javascript' src='js/syllables.js' defer></script>
+
+    <script type='text/javascript' src='js/RKLyrics.js' defer></script>
+    <script type='text/javascript' src='js/AudioFragmentPlayer.js' defer></script>
+    <script type='text/javascript' src='js/SpectrogramViewer.js' defer></script>
+
+    <script type='text/javascript' src='js/Global.js' defer></script>
+
+    <script type='text/javascript' src='js/Mode_Edit.js' defer></script>
+    <script type='text/javascript' src='js/Mode_Point.js' defer></script>
+    <script type='text/javascript' src='js/Mode_Stamp.js' defer></script>
+
+    <script type='text/javascript' src='js/Mode_Test.js' defer></script>
+    
+    <script type='text/javascript' src='js/FileDrop.js' defer></script>
+</body>
+</html>
