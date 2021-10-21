@@ -119,7 +119,7 @@
             const a = Number(document.getElementById("SpectroDAdd").value);
     
             Magnification = z;
-            canvas.height = h;
+            canvas.height = h + 32;
             spectrogramViewer = new SpectrogramViewer(canvas,fragmentPlayer.audioBuffer,
                 (i,w)=>{
                     if (i < 0)

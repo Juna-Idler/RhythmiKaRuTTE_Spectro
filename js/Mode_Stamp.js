@@ -112,6 +112,7 @@ function Stamp_DrawWaveView()
             }
         }
         if (currentText != null) {
+            ctx.font = "22px sans-serif";
             ctx.fillStyle = "white";
             ctx.textBaseline = "ideographic";
             ctx.fillText(currentText, nowpoint + 1, canvas.height);
