@@ -224,7 +224,7 @@ function create_pointmarker(time,option)
     return marker;
 }
 
-function Initialize(serialize)
+function Initialize(serialize,line)
 {
     const lyrics = CreateLyricsContainer(serialize);
     ruby_parent = lyrics.atTag.ruby_parent;
@@ -289,6 +289,11 @@ function Initialize(serialize)
         list.appendChild(li);
     });
 
+    if (line >= 0)
+    {
+        currentLine = line;
+        currentCursorPos = 0;
+    }
     if (currentLine >= list.children.length)
         currentLine = list.children.length;
     MoveCursor();
@@ -364,7 +369,7 @@ function Terminalize()
         list.firstChild.remove();
     document.removeEventListener("keydown",keydown,false);
 
-    return text.slice(0,-1);
+    return [text.slice(0,-1),currentLine];
 }
 
 

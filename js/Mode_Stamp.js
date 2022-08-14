@@ -384,7 +384,7 @@ function append_marker(parent,ref_node,time,option)
     }
 }
 
-function Initialize(serialize)
+function Initialize(serialize,line)
 {
     const lyrics = CreateLyricsContainer(serialize);
     ruby_parent = lyrics.atTag.ruby_parent;
@@ -459,6 +459,11 @@ function Initialize(serialize)
         list.appendChild(li);
     });
 
+    if (line >= 0)
+    {
+        currentLine = line;
+        currentTTPos = 0;
+    }
     if (currentLine >= list.children.length)
         currentLine = list.children.length;
     document.addEventListener("keydown",keydown,false);
@@ -529,7 +534,7 @@ function Terminalize()
     canvas.removeEventListener("mousedown",onMouseDown, false);
     DrawWaveView = DefaultDrawWaveView;
 
-    return text.slice(0,-1);
+    return [text.slice(0,-1),currentLine];
 }
 
 StampModeInitializer = {Initialize:Initialize,Terminalize:Terminalize};

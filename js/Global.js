@@ -178,6 +178,7 @@ var LastMode = "edit";
 function TabChange(e)
 {
     let serialize = "";
+    let line = -1;
     switch (LastMode)
     {
         case "edit":
@@ -186,11 +187,13 @@ function TabChange(e)
         break;
         case "point":
             if (tab_point.checked) return;
-            serialize = PointModeInitializer.Terminalize();
+//            serialize = PointModeInitializer.Terminalize();
+            [serialize,line] = PointModeInitializer.Terminalize();
         break;
         case "stamp":
             if (tab_stamp.checked) return;
-            serialize = StampModeInitializer.Terminalize();
+//            serialize = StampModeInitializer.Terminalize();
+            [serialize,line] = StampModeInitializer.Terminalize();
         break;
         case "test":
             if (tab_test.checked) return;
@@ -218,12 +221,12 @@ function TabChange(e)
     }
     else if (tab_point.checked)
     {
-        PointModeInitializer.Initialize(serialize);
+        PointModeInitializer.Initialize(serialize,line);
         LastMode = "point";
     }
     else if (tab_stamp.checked)
     {
-        StampModeInitializer.Initialize(serialize);
+        StampModeInitializer.Initialize(serialize,line);
         LastMode = "stamp";
     }
     else if (tab_test.checked)
